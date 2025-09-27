@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente - SOLUX</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        header { background: #007bff; color: white; padding: 12px; text-align: center; }
+        .container { max-width: 700px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        label { display: block; margin-top: 12px; }
+        input[type=text] { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; }
+        input[type=file] { margin-top: 4px; }
+        button { margin-top: 16px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .section { margin-top: 24px; }
+        .files ul { list-style-type: none; padding: 0; }
+        .files li { margin-bottom: 6px; }
+        .error { color: #d00; margin-top: 12px; }
+        .actions { margin-top: 24px; }
+        a.button { display: inline-block; padding: 10px 20px; background: #28a745; color: white; border-radius: 4px; text-decoration: none; }
+        a.button.close { background: #ffc107; color: #333; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align:center; font-size:2em; font-weight:bold; margin:0;">SOLUX</h1>
+        <p style="text-align:center; margin:0; color:#e6e6e6;">Energia solar</p>
+        <h2 style="text-align:center; margin-top:8px;">Editar Cliente</h2>
+    </header>
+    <div class="container">
+        <form method="post" action="/customers/{{customer_id}}">
+            <label>Nome:
+                <input type="text" name="name" value="{{name}}" required />
+            </label>
+            <label>Endereço:
+                <input type="text" name="address" value="{{address}}" required />
+            </label>
+            <button type="submit">Salvar</button>
+        </form>
+        <p class="error">{{error}}</p>
+        <div class="section">
+            <h2>Documentos</h2>
+            <form method="post" action="/customers/{{customer_id}}/upload" enctype="multipart/form-data">
+                <input type="hidden" name="file_type" value="CONTA_LUZ" />
+                <label>
+                    Contas de luz (múltiplas):<br>
+                    <input type="file" name="bill_files" accept="image/*,.pdf" multiple required />
+                </label>
+                <button type="submit">Enviar Contas</button>
+            </form>
+            <div class="files">
+                <h3>Arquivos anexados</h3>
+                {{files}}
+            </div>
+        </div>
+        <div class="actions">
+            <a href="/customers/{{customer_id}}/close" class="button close">Fechar cliente</a>
+            <a href="/customers" class="button">Voltar</a>
+        </div>
+    </div>
+</body>
+</html>

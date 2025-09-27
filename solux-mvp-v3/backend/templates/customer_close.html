@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fechar Cliente - SOLUX</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        header { background: #007bff; color: white; padding: 12px; text-align: center; }
+        .container { max-width: 700px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        label { display: block; margin-top: 12px; }
+        input, select { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 4px; }
+        input[type=file] { border: none; }
+        button { margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .error { color: #d00; margin-top: 12px; white-space: pre-line; }
+        a { display: inline-block; margin-top: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align:center; font-size:2em; font-weight:bold; margin:0;">SOLUX</h1>
+        <p style="text-align:center; margin:0; color:#e6e6e6;">Energia solar</p>
+        <h2 style="text-align:center; margin-top:8px;">Fechar/Editar Cliente</h2>
+    </header>
+    <div class="container">
+        <p class="error">{{error}}</p>
+        <form method="post" action="/customers/{{customer_id}}/close" enctype="multipart/form-data">
+            <!-- Informações do Projeto -->
+            <h3>Informações do Projeto</h3>
+            <label>Valor total do projeto vendido (R$):
+                <input type="number" name="valor_total_projeto" step="0.01" value="{{valor_total_projeto}}" />
+            </label>
+            <label>Custo total do projeto (R$):
+                <input type="number" name="custo_projeto_total" step="0.01" value="{{custo_projeto_total}}" />
+            </label>
+            <label>Observação sobre os custos:
+                <input type="text" name="observacao_custos" value="{{observacao_custos}}" />
+            </label>
+            <label>Lucro pela venda (R$) (automático):
+                <input type="number" name="lucro_venda" step="0.01" value="{{lucro_venda}}" readonly />
+            </label>
+            <label>Quantidade de placas:
+                <input type="number" name="quantidade_placas" min="0" value="{{quantidade_placas}}" />
+            </label>
+            <label>Tipo de inversor:
+                <input type="text" name="inversor" value="{{inversor}}" />
+            </label>
+            <label>Orçamento final (PDF ou imagem):
+                <input type="file" name="orcamento_final" accept="image/*,.pdf" />
+            </label>
+            <label>Documento do cliente (imagem ou PDF):
+                <input type="file" name="documento_cliente" accept="image/*,.pdf" />
+            </label>
+
+            <!-- Pagamento -->
+            <h3>Informações de Pagamento</h3>
+            <label>Valor da entrada (R$):
+                <input type="number" name="valor_entrada" step="0.01" min="0" value="{{valor_entrada}}" />
+            </label>
+            <label>Data do pagamento da entrada:
+                <input type="date" name="data_pagamento_entrada" value="{{data_pagamento_entrada}}" />
+            </label>
+            <label>Quantidade de parcelas:
+                <input type="number" name="quantidade_parcelas" min="0" value="{{quantidade_parcelas}}" />
+            </label>
+            <label>Juros aplicado (%):
+                <input type="number" name="juros_percentual" step="0.01" value="{{juros_percentual}}" />
+            </label>
+            <!-- A data das parcelas será calculada automaticamente com base na data de entrada -->
+            <label>Valor de cada parcela (R$) (automático):
+                <input type="number" name="valor_parcela" step="0.01" value="{{valor_parcela}}" readonly />
+            </label>
+            <label>Valor total (R$) (automático):
+                <input type="number" name="valor_total_financiamento" step="0.01" value="{{valor_total_financiamento}}" readonly />
+            </label>
+
+            <!-- Observações gerais -->
+            <h3>Observações</h3>
+            <label>Comentários adicionais:
+                <input type="text" name="observacao" value="{{observacao}}" />
+            </label>
+            <button type="submit">Salvar</button>
+        </form>
+        <a href="/customers/{{customer_id}}">Cancelar</a>
+    </div>
+</body>
+</html>

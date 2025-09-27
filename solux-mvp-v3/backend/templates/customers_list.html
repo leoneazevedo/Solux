@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes - SOLUX</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        header { background: #007bff; color: white; padding: 12px; text-align: center; }
+        .container { max-width: 960px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 8px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #f0f0f0; }
+        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .toolbar form { display: flex; gap: 8px; flex-wrap: wrap; }
+        .toolbar a { padding: 6px 12px; background: #28a745; color: white; border-radius: 4px; text-decoration: none; }
+        .toolbar a.logout { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align:center; font-size:2em; font-weight:bold; margin:0;">SOLUX</h1>
+        <p style="text-align:center; margin:0; color:#e6e6e6;">Energia solar</p>
+        <h2 style="text-align:center; margin-top:8px;">Clientes</h2>
+    </header>
+    <div class="container">
+        <div class="toolbar">
+            <form method="get" action="/customers">
+                <input type="text" name="q" value="{{search}}" placeholder="Pesquisar" />
+                <select name="status">
+                    <option value="">Todos</option>
+                    <option value="EM_ANDAMENTO">Em andamento</option>
+                    <option value="FECHADO">Fechado</option>
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
+            <a href="/customers/new">Novo Cliente</a>
+            <a href="/logout" class="logout">Sair ({{current_user}})</a>
+        </div>
+        <table>
+            <thead>
+                <tr><th>Nome</th><th>Endereço</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+                {{rows}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
